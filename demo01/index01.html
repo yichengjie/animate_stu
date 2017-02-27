@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.css"/>
+    <style type="text/css">
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2 id ="yourElement" class="error"></h2>
+    </div>
+
+    <button onclick="test()">test</button>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        $.fn.extend({
+            animateCss: function (animationName) {
+                var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+                this.addClass('animated ' + animationName).one(animationEnd, function() {
+                    $(this).removeClass('animated ' + animationName);
+                    $(this).html('') ;
+                });
+            }
+        });
+        //$('#yourElement').addClass('animated bounce');
+        //$('#yourElement').animateCss('bounce');
+
+
+        function test(){
+            $("#yourElement").html('Hello world... ');
+            $("#yourElement").animateCss('rollIn')
+        }
+    </script>
+</body>
+</html>
