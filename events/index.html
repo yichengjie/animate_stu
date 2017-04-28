@@ -6,6 +6,11 @@
 </head>
 <body>
 
+
+<div id="test1">
+</div>
+
+<script type="text/javascript" src = "../node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="./js/underscore.js"></script>
 <script type="text/javascript" src="./js/Event.js"></script>
 <script type="text/javascript">
@@ -15,9 +20,16 @@
         object.on('expand', function(){
             console.info('-----------> expanded');
         });
+        //object.off('expand');
         object.trigger('expand');
+        //var node = $("#test1") ;
+       // console.info(node) ;
     }
     test001() ;
+
+
+
+
 </script>
 </body>
 </html>

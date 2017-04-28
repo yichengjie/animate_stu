@@ -21,10 +21,33 @@
   // A private global variable to share between listeners and listenees.
   var _listening;
 
+
+  function logEventsApi(iteratee, events, name, callback, opts){
+      console.info('--------------------------------------------------------') ;
+      console.info('iteratee : ' ,iteratee) ;
+      console.info('events : ' , events) ;
+      console.info('name : ' , name) ;
+      console.info('callback : ' ,callback) ;
+      console.info('opts : ' ,opts) ;
+      console.info('--------------------------------------------------------') ;
+  }
+
+
   // Iterates over the standard `event, callback` (as well as the fancy multiple
   // space-separated events `"change blur", callback` and jQuery-style event
   // maps `{event: callback}`).
+  /**
+   * @param iteratee   具体执行event的类型eg：triggerAPI，onAPI
+   * @param events   所有的事件
+   * @param name     事件名称
+   * @param callback 事件的回调函数
+   * @param opts     可选参数
+   * @returns {*}
+   */
   var eventsApi = function(iteratee, events, name, callback, opts) {
+
+    //logEventsApi(iteratee, events, name, callback, opts) ;
+
     var i = 0, names;
     if (name && typeof name === 'object') {
       // Handle event maps.
@@ -44,16 +67,18 @@
     return events;
   };
 
+
   // Bind an event to a `callback` function. Passing `"all"` will bind
   // the callback to all events fired.
   Events.on = function(name, callback, context) {
-      
+    //console.info(`Event.on method : param list --> name : ${name}, callback :${callback} ,  context : ${context}`) ;
     this._events = eventsApi(onApi, this._events || {}, name, callback, {
       context: context,
       ctx: this,
       listening: _listening
     });
 
+    
     if (_listening) {
       var listeners = this._listeners || (this._listeners = {});
       listeners[_listening.id] = _listening;
@@ -96,9 +121,10 @@
   var onApi = function(events, name, callback, options) {
     if (callback) {
       var handlers = events[name] || (events[name] = []);
-      var context = options.context, ctx = options.ctx, listening = options.listening;
+      var context = options.context ;
+      var ctx = options.ctx ;
+      var listening = options.listening;
       if (listening) listening.count++;
-
       handlers.push({callback: callback, context: context, ctx: context || ctx, listening: listening});
     }
     return events;
@@ -152,9 +178,11 @@
 
   // The reducing API that removes a callback from the `events` object.
   var offApi = function(events, name, callback, options) {
+
     if (!events) return;
 
-    var context = options.context, listeners = options.listeners;
+    var context = options.context ;
+    var listeners = options.listeners;
     var i = 0, names;
 
     // Delete all event listeners and "drop" events.
@@ -248,6 +276,7 @@
 
   // Handles triggering the appropriate event callbacks.
   var triggerApi = function(objEvents, name, callback, args) {
+    debugger
     if (objEvents) {
       var events = objEvents[name];
       var allEvents = objEvents.all;
@@ -262,7 +291,12 @@
   // triggering events. Tries to keep the usual cases speedy (most internal
   // Backbone events have 3 arguments).
   var triggerEvents = function(events, args) {
-    var ev, i = -1, l = events.length, a1 = args[0], a2 = args[1], a3 = args[2];
+    var ev ;
+    var  i = -1 ;
+    var  l = events.length ;
+    var  a1 = args[0] ;
+    var  a2 = args[1] ;
+    var  a3 = args[2] ;
     switch (args.length) {
       case 0: while (++i < l) (ev = events[i]).callback.call(ev.ctx); return;
       case 1: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1); return;
