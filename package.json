@@ -22,6 +22,7 @@
   "homepage": "https://github.com/yichengjie/animate_stu#readme",
   "dependencies": {
     "animate.css": "^3.5.2",
+    "bootstrap": "^3.3.7",
     "jquery": "^3.1.1"
   }
 }

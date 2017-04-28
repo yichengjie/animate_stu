@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script type="text/javascript" src="./js/underscore.js"></script>
+<script type="text/javascript" src="./js/Event.js"></script>
+<script type="text/javascript">
+    function test001(){
+        var object = {};
+        _.extend(object, Backbone.Events);
+        object.on('expand', function(){
+            console.info('-----------> expanded');
+        });
+        object.trigger('expand');
+    }
+    test001() ;
+</script>
+</body>
+</html>

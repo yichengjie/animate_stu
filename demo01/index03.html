@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+
+
+<div id ="test">
+    hello world
+</div>
+
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+    function myHandler(event) {
+        alert(event.data.foo);
+    }
+    $(function () {
+        $("#test").on("click", {foo: "bar"}, myHandler)
+    }) ;
+</script>
+
+</body>
+</html>
